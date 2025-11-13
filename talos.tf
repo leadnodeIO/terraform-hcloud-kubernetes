@@ -679,8 +679,8 @@ data "talos_cluster_health" "this" {
 
   client_configuration   = talos_machine_secrets.this.client_configuration
   endpoints              = terraform_data.talos_access_data.output.endpoints
-  control_plane_nodes    = terraform_data.talos_access_data.output.control_plane_nodes
-  worker_nodes           = terraform_data.talos_access_data.output.worker_nodes
+  control_plane_nodes    = var.cluster_healthcheck_auto_discover_nodes ? [] : terraform_data.talos_access_data.output.control_plane_nodes
+  worker_nodes           = var.cluster_healthcheck_auto_discover_nodes ? [] : terraform_data.talos_access_data.output.worker_nodes
   skip_kubernetes_checks = false
 
   depends_on = [data.http.kube_api_health]

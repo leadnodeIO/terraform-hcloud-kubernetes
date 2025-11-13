@@ -96,3 +96,30 @@ output "kube_api_load_balancer" {
     private_ipv4 = local.kube_api_load_balancer_private_ipv4
   } : null
 }
+
+# Talos configuration outputs for hybrid cluster integration (e.g., dedicated servers, custom VMs)
+output "talos_version" {
+  description = "Talos Linux version used by the cluster. Required for external workers to use matching version."
+  value       = var.talos_version
+}
+
+output "kubernetes_version" {
+  description = "Kubernetes version running on the cluster. Required for external workers to join with matching version."
+  value       = var.kubernetes_version
+}
+
+output "talos_schematic_id" {
+  description = "Talos Image Factory schematic ID containing all extensions. Required for external workers to use same extensions."
+  value       = local.talos_schematic_id
+}
+
+output "talos_secrets" {
+  description = "Talos machine secrets for cluster authentication. Required for external workers to join the cluster."
+  value       = talos_machine_secrets.this
+  sensitive   = true
+}
+
+output "cluster_endpoint" {
+  description = "Kubernetes API endpoint URL. Required for external workers to connect to the cluster."
+  value       = local.kube_api_url_internal
+}
