@@ -78,7 +78,13 @@ locals {
       "--file \"$machine_config\""
     ]
   )
-  talosctl_health_check_command = join(" ",
+  talosctl_health_check_command = var.cluster_healthcheck_auto_discover_nodes ? join(" ",
+    [
+      "talosctl health",
+      "--talosconfig \"$talosconfig\"",
+      "--server=true"
+    ]
+  ) : join(" ",
     [
       "talosctl health",
       "--talosconfig \"$talosconfig\"",
