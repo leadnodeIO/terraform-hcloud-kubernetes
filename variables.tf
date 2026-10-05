@@ -82,6 +82,12 @@ variable "cluster_healthcheck_enabled" {
   description = "Determines whether to wait for the Kubernetes API to become ready after cluster deployment and upgrades."
 }
 
+variable "cluster_healthcheck_auto_discover_nodes" {
+  type        = bool
+  default     = false
+  description = "Enables automatic discovery of all cluster nodes for health checks. Useful for hybrid clusters where external workers aren't in Terraform state."
+}
+
 variable "cluster_delete_protection" {
   type        = bool
   default     = true

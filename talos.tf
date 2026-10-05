@@ -61,6 +61,7 @@ locals {
     talos_reboot_mode                   = var.talos_reboot_mode
     talosctl_retries                    = var.talosctl_retries
     healthcheck_enabled                 = var.cluster_healthcheck_enabled
+    healthcheck_auto_discover_nodes     = var.cluster_healthcheck_auto_discover_nodes
     talos_primary_node                  = local.talos_primary_node_private_ipv4
     kube_api_url                        = local.kube_api_url_external
     kubernetes_version                  = var.kubernetes_version
