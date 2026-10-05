@@ -28,8 +28,10 @@ talos_health_check() {
   talosctl health \
     --talosconfig "$talosconfig" \
     --server=true \
+%{ if !healthcheck_auto_discover_nodes ~}
     --control-plane-nodes '${join(",", control_plane_nodes)}' \
     --worker-nodes '${join(",", worker_nodes)}' \
+%{ endif ~}
     --nodes "${talos_primary_node}" \
     "$@"
 }
