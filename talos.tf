@@ -61,6 +61,7 @@ locals {
     talos_reboot_mode                   = var.talos_reboot_mode
     talosctl_retries                    = var.talosctl_retries
     healthcheck_enabled                 = var.cluster_healthcheck_enabled
+    healthcheck_auto_discover_nodes     = var.cluster_healthcheck_auto_discover_nodes
     talos_primary_node                  = local.talos_primary_node_private_ipv4
     kube_api_url                        = local.kube_api_url_external
     kubernetes_version                  = var.kubernetes_version
@@ -661,8 +662,8 @@ data "talos_cluster_health" "this" {
 
   client_configuration   = talos_machine_secrets.this.client_configuration
   endpoints              = terraform_data.talos_access_data.output.endpoints
-  control_plane_nodes    = terraform_data.talos_access_data.output.control_plane_nodes
-  worker_nodes           = terraform_data.talos_access_data.output.worker_nodes
+  control_plane_nodes    = var.cluster_healthcheck_auto_discover_nodes ? [] : terraform_data.talos_access_data.output.control_plane_nodes
+  worker_nodes           = var.cluster_healthcheck_auto_discover_nodes ? [] : terraform_data.talos_access_data.output.worker_nodes
   skip_kubernetes_checks = false
 
   depends_on = [data.http.kube_api_health]
